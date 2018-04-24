@@ -81,7 +81,7 @@
         "version": "v4.0.1"
     },
     "ocramius/proxy-manager": {
-        "version": "2.1.1"
+        "version": "2.2.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
