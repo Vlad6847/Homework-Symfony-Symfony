@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="affiliates")
  * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
  */
 class Affiliate
@@ -39,18 +40,29 @@ class Affiliate
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return Affiliate
+     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -58,11 +70,19 @@ class Affiliate
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     *
+     * @return Affiliate
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -70,11 +90,19 @@ class Affiliate
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getToken(): ?string
     {
         return $this->token;
     }
 
+    /**
+     * @param string $token
+     *
+     * @return Affiliate
+     */
     public function setToken(string $token): self
     {
         $this->token = $token;
@@ -82,11 +110,19 @@ class Affiliate
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getActive(): ?bool
     {
         return $this->active;
     }
 
+    /**
+     * @param bool $active
+     *
+     * @return Affiliate
+     */
     public function setActive(bool $active): self
     {
         $this->active = $active;
@@ -94,14 +130,22 @@ class Affiliate
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    /**
+     * @param \DateTimeInterface $createdAt
+     *
+     * @return Affiliate
+     */
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

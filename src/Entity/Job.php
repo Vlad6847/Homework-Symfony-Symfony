@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="jobs")
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */
 class Job
@@ -22,12 +23,12 @@ class Job
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $company;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
 
@@ -54,7 +55,7 @@ class Job
     /**
      * @ORM\Column(type="text")
      */
-    private $how_to_apply;
+    private $howToApply;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -79,28 +80,39 @@ class Job
     /**
      * @ORM\Column(type="datetime")
      */
-    private $expires_at;
+    private $expiresAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updated_at;
+    private $updatedAt;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return Job
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -108,11 +120,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCompany(): ?string
     {
         return $this->company;
     }
 
+    /**
+     * @param string $company
+     *
+     * @return Job
+     */
     public function setCompany(string $company): self
     {
         $this->company = $company;
@@ -120,11 +140,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getLogo(): ?string
     {
         return $this->logo;
     }
 
+    /**
+     * @param string $logo
+     *
+     * @return Job
+     */
     public function setLogo(string $logo): self
     {
         $this->logo = $logo;
@@ -132,11 +160,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return Job
+     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -144,11 +180,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getPosition(): ?string
     {
         return $this->position;
     }
 
+    /**
+     * @param string $position
+     *
+     * @return Job
+     */
     public function setPosition(string $position): self
     {
         $this->position = $position;
@@ -156,11 +200,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
+    /**
+     * @param string $location
+     *
+     * @return Job
+     */
     public function setLocation(string $location): self
     {
         $this->location = $location;
@@ -168,11 +220,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     *
+     * @return Job
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -180,23 +240,39 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getHowToApply(): ?string
     {
-        return $this->how_to_apply;
+        return $this->howToApply;
     }
 
-    public function setHowToApply(string $how_to_apply): self
+    /**
+     * @param string $howToApply
+     *
+     * @return Job
+     */
+    public function setHowToApply(string $howToApply): self
     {
-        $this->how_to_apply = $how_to_apply;
+        $this->howToApply = $howToApply;
 
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getToken(): ?string
     {
         return $this->token;
     }
 
+    /**
+     * @param string $token
+     *
+     * @return Job
+     */
     public function setToken(string $token): self
     {
         $this->token = $token;
@@ -204,11 +280,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getPublic(): ?bool
     {
         return $this->public;
     }
 
+    /**
+     * @param bool $public
+     *
+     * @return Job
+     */
     public function setPublic(bool $public): self
     {
         $this->public = $public;
@@ -216,11 +300,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getActivated(): ?bool
     {
         return $this->activated;
     }
 
+    /**
+     * @param bool $activated
+     *
+     * @return Job
+     */
     public function setActivated(bool $activated): self
     {
         $this->activated = $activated;
@@ -228,11 +320,19 @@ class Job
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     *
+     * @return Job
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -240,38 +340,62 @@ class Job
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getExpiresAt(): ?\DateTimeInterface
     {
-        return $this->expires_at;
+        return $this->expiresAt;
     }
 
-    public function setExpiresAt(\DateTimeInterface $expires_at): self
+    /**
+     * @param \DateTimeInterface $expiresAt
+     *
+     * @return Job
+     */
+    public function setExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $this->expires_at = $expires_at;
+        $this->expiresAt = $expiresAt;
 
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    /**
+     * @param \DateTimeInterface $createdAt
+     *
+     * @return Job
+     */
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    /**
+     * @param \DateTimeInterface $updatedAt
+     *
+     * @return Job
+     */
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
