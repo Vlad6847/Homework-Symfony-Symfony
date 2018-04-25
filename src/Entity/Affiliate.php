@@ -44,7 +44,7 @@ class Affiliate
 
 
     /**
-     * @return int|null
+     * @return null|int
      */
     public function getId(): ?int
     {
