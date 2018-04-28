@@ -24,13 +24,51 @@ class Category
     private $name;
 
     /**
+     * @var Collection
      * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
      */
     private $affiliates;
 
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="category")
+     */
+    private $jobs;
+
     public function __construct()
     {
+        $this->jobs       = new \Doctrine\Common\Collections\ArrayCollection();
         $this->affiliates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    /**
+     * @param Job $job
+     * @return Category
+     */
+    public function addJob(Job $job): Category
+    {
+        $this->jobs->add($job);
+
+        return $this;
+    }
+
+    /**
+     * @param Job $job
+     * @return Category
+     */
+    public function removeJob(Job $job): Category
+    {
+        $this->jobs->removeElement($job);
+
+        return $this;
     }
 
     /**

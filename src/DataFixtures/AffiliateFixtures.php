@@ -9,12 +9,13 @@
 namespace App\DataFixtures;
 
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
 use App\Entity\Affiliate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AffiliateFixtures extends Fixture
+class AffiliateFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @param ObjectManager $manager
@@ -28,13 +29,22 @@ class AffiliateFixtures extends Fixture
             $affiliate = new Affiliate();
             $affiliate->setUrl($faker->url);
             $affiliate->setEmail($faker->email);
-            $affiliate->setToken($faker->word);
+            $affiliate->setToken($faker->md5);
             $affiliate->setActive($faker->boolean);
-            $affiliate->setCreatedAt($faker->dateTime());
 
             $manager->persist($affiliate);
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return [
+            CategoryFixtures::class,
+        ];
     }
 }

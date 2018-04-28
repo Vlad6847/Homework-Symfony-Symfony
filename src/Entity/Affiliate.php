@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="affiliates")
  * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
  */
@@ -60,6 +61,32 @@ class Affiliate
     public function getCategories(): Collection
     {
         return $this->categories;
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return Affiliate
+     */
+    public function addCategory(Category $category): Affiliate
+    {
+        if ( ! $this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return Affiliate
+     */
+    public function removeCategory(Category $category): Affiliate
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
     }
 
     /**

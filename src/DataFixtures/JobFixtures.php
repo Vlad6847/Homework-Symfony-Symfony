@@ -25,24 +25,25 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('ru_RU');
+        $faker      = Faker\Factory::create('ru_RU');
+        $categories = $manager->getRepository(Category::class)->findAll();
+
         for ($i = 0; $i < 20; $i++) {
             $job = new Job();
-            $job->setType($faker->word);
+            $job->setType($faker->jobTitle);
             $job->setCompany($faker->company);
-            $job->setLogo($faker->word);
+            $job->setLogo($faker->imageUrl());
             $job->setUrl($faker->url);
             $job->setPosition($faker->word);
-            $job->setLocation($faker->word);
-            $job->setDescription($faker->sentence);
-            $job->setHowToApply($faker->sentence);
-            $job->setToken($faker->word);
+            $job->setLocation($faker->city);
+            $job->setDescription($faker->paragraph());
+            $job->setHowToApply($faker->paragraph());
+            $job->setToken($faker->md5);
             $job->setPublic($faker->boolean);
             $job->setActivated($faker->boolean);
             $job->setEmail($faker->email);
             $job->setExpiresAt($faker->dateTime);
-            $job->setCreatedAt($faker->dateTime);
-
+            $job->setCategory($faker->randomElement($categories));
             $manager->persist($job);
         }
 
@@ -54,8 +55,8 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return array(
-            Category::class,
-        );
+        return [
+            CategoryFixtures::class,
+        ];
     }
 }
