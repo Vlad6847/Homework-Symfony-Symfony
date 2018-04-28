@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,24 @@ class Affiliate
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="affiliates")
+     * @ORM\JoinTable(name="categories_affiliates")
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
 
     /**
      * @return null|int
@@ -149,5 +168,13 @@ class Affiliate
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,15 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
+     */
+    private $affiliates;
+
+    public function __construct()
+    {
+        $this->affiliates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return null|int
@@ -29,6 +39,15 @@ class Category
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+
+    /**
+     * @return Collection
+     */
+    public function getAffiliates(): Collection
+    {
+        return $this->affiliates;
     }
 
     /**
