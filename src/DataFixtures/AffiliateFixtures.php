@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: god
- * Date: 4/28/18
- * Time: 9:46 AM
- */
 
 namespace App\DataFixtures;
 
@@ -25,6 +19,7 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('ru_RU');
+
         for ($i = 0; $i < 20; $i++) {
             $affiliate = new Affiliate();
             $affiliate->setUrl($faker->url);

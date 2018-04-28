@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,7 +53,7 @@ class Affiliate
 
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -70,7 +71,7 @@ class Affiliate
      */
     public function addCategory(Category $category): Affiliate
     {
-        if ( ! $this->categories->contains($category)) {
+        if (!$this->categories->contains($category)) {
             $this->categories->add($category);
         }
 

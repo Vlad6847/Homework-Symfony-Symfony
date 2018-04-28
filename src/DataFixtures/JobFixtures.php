@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: god
- * Date: 4/28/18
- * Time: 9:45 AM
- */
 
 namespace App\DataFixtures;
 
@@ -25,7 +19,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $faker      = Faker\Factory::create('ru_RU');
+        $faker = Faker\Factory::create('ru_RU');
         $categories = $manager->getRepository(Category::class)->findAll();
 
         for ($i = 0; $i < 20; $i++) {

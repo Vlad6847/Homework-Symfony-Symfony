@@ -16,6 +16,7 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('ru_RU');
+
         for ($i = 0; $i < 20; $i++) {
             $category = new Category();
             $category->setName($faker->word);

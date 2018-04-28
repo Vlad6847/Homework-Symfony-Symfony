@@ -112,7 +112,7 @@ class Job
     /**
      * @param $category
      */
-    public function setCategory($category): void
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,8 +38,8 @@ class Category
 
     public function __construct()
     {
-        $this->jobs       = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->affiliates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->jobs       = new ArrayCollection();
+        $this->affiliates = new ArrayCollection();
     }
 
     /**
@@ -79,6 +80,25 @@ class Category
         return $this->id;
     }
 
+    /**
+     * @param Affiliate|null $affiliate
+     *
+     * @return Category
+     */
+    public function addAffiliate(?Affiliate $affiliate): Category
+    {
+        if (!$this->affiliates->contains($affiliate)) {
+            $this->affiliates->add($affiliate);
+        }
+        
+        return $this;
+    }
+
+    public function removeAffiliate(?Affiliate $affiliate): Category
+    {
+        $this->affiliates->removeElement($affiliate);
+        return $this;
+    }
 
     /**
      * @return Collection
