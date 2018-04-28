@@ -22,21 +22,21 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('ru_RU');
         $categories = $manager->getRepository(Category::class)->findAll();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $job = new Job();
             $job->setType($faker->jobTitle);
             $job->setCompany($faker->company);
             $job->setLogo($faker->imageUrl());
             $job->setUrl($faker->url);
-            $job->setPosition($faker->word);
+            $job->setPosition($faker->jobTitle);
             $job->setLocation($faker->city);
-            $job->setDescription($faker->paragraph());
-            $job->setHowToApply($faker->paragraph());
+            $job->setDescription($faker->paragraph(1));
+            $job->setHowToApply($faker->paragraph(1));
             $job->setToken($faker->md5);
             $job->setPublic($faker->boolean);
             $job->setActivated($faker->boolean);
             $job->setEmail($faker->email);
-            $job->setExpiresAt($faker->dateTime);
+            $job->setExpiresAt($faker->dateTimeBetween('now', '+2 years'));
             $job->setCategory($faker->randomElement($categories));
             $manager->persist($job);
         }

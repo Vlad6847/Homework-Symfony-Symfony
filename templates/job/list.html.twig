@@ -2,22 +2,32 @@
 
 {% block body %}
     <table class="table text-center">
-        <tr>
-            <th class="active text-center">City</th>
-            <th class="active text-center">Position</th>
-            <th class="active text-center">Company</th>
+
+        <th class="active text-center"><a href="{{ url('job.list') }}orderby/location">City</a></th>
+        <th class="active text-center"><a href="{{ url('job.list') }}orderby/position">Position</a></th>
+        <th class="active text-center"><a href="{{ url('job.list') }}orderby/company">Company</a></th>
+        <th class="active text-center">Description</th>
+        <th class="active text-center">How to apply</th>
+        <th class="active text-center"><a href="{{ url('job.list') }}orderby/createdAt">Created at</a></th>
+        <th class="active text-center"><a href="{{ url('job.list') }}orderby/expiresAt">Expires at</a></th>
         </tr>
 
         {% for job in jobs %}
-        <tr>
-            <td>{{ job.location }}</td>
-            <td>
-               {# <a href="#"> #}
-                    {{ job.position }}
-                {#</a>#}
-            </td>
-            <td>{{ job.company }}</td>
-        </tr>
+            <tr>
+                {% if job.activated %}
+                    <td>{{ job.location }}</td>
+                    <td>
+                        {# <a href="#"> #}
+                        {{ job.position }}
+                        {#</a>#}
+                    </td>
+                    <td>{{ job.company }}</td>
+                    <td>{{ job.description }}</td>
+                    <td>{{ job.howtoapply }}</td>
+                    <td>{{ job.createdat|date("d/m/Y") }}</td>
+                    <td>{{ job.expiresat|date("d/m/Y") }}</td>
+                {% endif %}
+            </tr>
         {% endfor %}
     </table>
 {% endblock %}

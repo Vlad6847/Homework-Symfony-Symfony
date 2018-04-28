@@ -26,4 +26,22 @@ class JobController extends AbstractController
             'jobs' => $jobs,
         ]);
     }
+
+    /**
+     * @Route("/orderby/{slug}", name="orderBy")
+     * @param string $slug
+     *
+     * @return Response
+     * @throws \LogicException
+     */
+    public function orderBy(string $slug): Response
+    {
+        $jobs = $this->getDoctrine()->getRepository(Job::class)
+                     ->findAllSortedBy($slug);
+
+
+        return $this->render('job/list.html.twig', [
+            'jobs' => $jobs,
+        ]);
+    }
 }
