@@ -38,7 +38,7 @@ class Category
 
     public function __construct()
     {
-        $this->jobs       = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
         $this->affiliates = new ArrayCollection();
     }
 
