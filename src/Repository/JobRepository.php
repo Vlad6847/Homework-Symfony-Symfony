@@ -28,9 +28,23 @@ class JobRepository extends ServiceEntityRepository
 //     * @return Job[] Returns an array of Job objects
 //     */
 
+    /**
+     * @param $field
+     *
+     * @return mixed
+     */
     public function findAllSortedBy($field)
     {
         return $this->createQueryBuilder('a')
+                    ->orderBy('a.'.$field, 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function searchPosition($field)
+    {
+        return $this->createQueryBuilder('a')
+                    ->andWhere('a.position = '.$field)
                     ->orderBy('a.'.$field, 'ASC')
                     ->getQuery()
                     ->getResult();
