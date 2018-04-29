@@ -4,12 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Job|null find($id, $lockMode = null, $lockVersion = null)
  * @method Job|null findOneBy(array $criteria, array $orderBy = null)
- * @method Job[]    findAll()
  * @method Job[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class JobRepository extends ServiceEntityRepository
@@ -24,32 +24,40 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
-//    /**
-//     * @return Job[] Returns an array of Job objects
-//     */
+    /**
+     *
+     * @return array
+     */
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('j')
+                    ->andWhere('j.activated = true')
+                    ->orderBy('j.expiresAt', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
 
     /**
      * @param $field
      *
-     * @return mixed
+     * @return array
      */
-    public function findAllSortedBy($field)
+    public function findAllOrderBy($field = 'expiresAt'): array
     {
-        return $this->createQueryBuilder('a')
-                    ->orderBy('a.'.$field, 'ASC')
-                    ->getQuery()
-                    ->getResult();
-    }
+        if ($field === 'location' || $field === 'company'
+            || $field === 'position'
+            || $field === 'expiresAt'
+            || $field === 'createdAt'
+        ) {
+            return $this->createQueryBuilder('j')
+                        ->andWhere('j.activated = true')
+                        ->orderBy('j.'.$field, 'ASC')
+                        ->getQuery()
+                        ->getResult();
+        }
 
-    public function searchPosition($field)
-    {
-        return $this->createQueryBuilder('a')
-                    ->andWhere('a.position = '.$field)
-                    ->orderBy('a.'.$field, 'ASC')
-                    ->getQuery()
-                    ->getResult();
+        return [];
     }
-
 
     /*
     public function findOneBySomeField($value): ?Job
