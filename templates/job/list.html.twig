@@ -3,11 +3,10 @@
 {% block body %}
     <table class="table table-hover text-center">
         <tr class="active">
-            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=location&order=ASC">City</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=position&order=ASC">Position</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=company&order=ASC">Company</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=createdAt&order=ASC">Created at</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=expiresAt&order=ASC">Expires at</a></th>
+            <th class="text-center"><a href="{{ url('job.list', ['location', 'ASC']) }}">City</a></th>
+            <th class="text-center"><a href="{{ url('job.list', ['position', 'ASC']) }}">Position</a></th>
+            <th class="text-center"><a href="{{ url('job.list', ['company', 'ASC']) }}">Company</a></th>
+            <th class="text-center"><a href="{{ url('job.list', ['createdAt', 'ASC']) }}">Created at</a></th>
         </tr>
 
         {% for job in jobs %}
@@ -18,7 +17,6 @@
                 </td>
                 <td>{{ job.company }}</td>
                 <td>{{ job.createdat|date("d/m/Y") }}</td>
-                <td>{{ job.expiresat|date("d/m/Y") }}</td>
             </tr>
         {% endfor %}
     </table>

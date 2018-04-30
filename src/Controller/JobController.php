@@ -17,23 +17,34 @@ class JobController extends AbstractController
      * @Route("/", name="job.list")
      * @Method("GET")
      *
+     * @param Request $request
+     *
      * @return Response
      * @throws \LogicException
      */
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
-        $request   = new Request($_GET);
-        $sort_by = 'expiresAt';
-        $order     = 'ASC';
+        $sort_by = 'createdAt';
+        $order = 'ASC';
 
-        if (null !== $request->query->get('sort_by')
-            && null !== $request->query->get('order')
+        if (null !== $request->query->get('0')
+            && null !== $request->query->get('1')
         ) {
-            $sort_by = $request->query->get('sort_by');
-            $order     = $request->query->get('order');
+            $sort_by = $request->query->get('0');
+            $order = $request->query->get('1');
         }
         $jobs = $this->getDoctrine()->getRepository(Job::class)
                      ->findAllOrderBy($sort_by, $order);
+
+        return $this->render('job/list.html.twig', [
+            'jobs' => $jobs,
+        ]);
+    }
+
+    public function search(Request $request): Response
+    {
+        $jobs = $this->getDoctrine()->getRepository(Job::class)
+                     ->findAll();
 
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,

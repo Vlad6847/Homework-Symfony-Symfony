@@ -32,7 +32,7 @@ class JobRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('j')
                     ->andWhere('j.activated = true')
-                    ->orderBy('j.expiresAt', 'ASC')
+                    ->orderBy('j.createdAt', 'ASC')
                     ->getQuery()
                     ->getResult();
     }
@@ -51,7 +51,6 @@ class JobRepository extends ServiceEntityRepository
                 'location',
                 'company',
                 'position',
-                'expiresAt',
                 'createdAt',
             ])
             && \in_array($order, [
@@ -69,6 +68,16 @@ class JobRepository extends ServiceEntityRepository
         return [];
     }
 
+    public function findAllByPositionOrderBy($position, $order): array
+    {
+        return $this->createQueryBuilder('j')
+                    ->andWhere('j.activated = true')
+                    ->andWhere('j.position like '.$position.'%')
+                    ->orderBy('j.'.$position, $order)
+                    ->getQuery()
+                    ->getResult();
+
+    }
     /*
     public function findOneBySomeField($value): ?Job
     {

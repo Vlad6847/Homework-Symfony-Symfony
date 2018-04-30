@@ -19,7 +19,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('ru_RU');
+        $faker = Faker\Factory::create();
         $categories = $manager->getRepository(Category::class)->findAll();
 
         for ($i = 0; $i < 40; $i++) {
