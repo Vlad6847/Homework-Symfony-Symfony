@@ -38,23 +38,30 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $field
+     * @param string $field
+     *
+     * @param string $order
      *
      * @return array
      */
-    public function findAllOrderBy($field = 'expiresAt'): array
+    public function findAllOrderBy($field, $order): array
     {
+
         if (\in_array($field, [
-            'location',
-            'company',
-            'position',
-            'expiresAt',
-            'createdAt',
-        ])
+                'location',
+                'company',
+                'position',
+                'expiresAt',
+                'createdAt',
+            ])
+            && \in_array($order, [
+                'ASC',
+                'DESC',
+            ])
         ) {
             return $this->createQueryBuilder('j')
                         ->andWhere('j.activated = true')
-                        ->orderBy('j.'.$field, 'ASC')
+                        ->orderBy('j.'.$field, $order)
                         ->getQuery()
                         ->getResult();
         }

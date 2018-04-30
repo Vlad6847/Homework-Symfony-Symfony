@@ -3,11 +3,11 @@
 {% block body %}
     <table class="table table-hover text-center">
         <tr class="active">
-            <th class="text-center"><a href="{{ url('job.list') }}orderby/location">City</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}orderby/position">Position</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}orderby/company">Company</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}orderby/createdAt">Created at</a></th>
-            <th class="text-center"><a href="{{ url('job.list') }}orderby/expiresAt">Expires at</a></th>
+            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=location&order=ASC">City</a></th>
+            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=position&order=ASC">Position</a></th>
+            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=company&order=ASC">Company</a></th>
+            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=createdAt&order=ASC">Created at</a></th>
+            <th class="text-center"><a href="{{ url('job.list') }}?sort_by=expiresAt&order=ASC">Expires at</a></th>
         </tr>
 
         {% for job in jobs %}
