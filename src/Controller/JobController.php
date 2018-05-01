@@ -27,24 +27,14 @@ class JobController extends AbstractController
         $sort_by = 'createdAt';
         $order = 'ASC';
 
-        if (null !== $request->query->get('0')
-            && null !== $request->query->get('1')
+        if (null !== $request->query->get('field')
+            && null !== $request->query->get('direction')
         ) {
-            $sort_by = $request->query->get('0');
-            $order = $request->query->get('1');
+            $sort_by = $request->query->get('field');
+            $order = $request->query->get('direction');
         }
         $jobs = $this->getDoctrine()->getRepository(Job::class)
                      ->findAllOrderBy($sort_by, $order);
-
-        return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
-        ]);
-    }
-
-    public function search(Request $request): Response
-    {
-        $jobs = $this->getDoctrine()->getRepository(Job::class)
-                     ->findAll();
 
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,
