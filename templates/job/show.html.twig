@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <b>Updated at: </b>{{ job.updatedAt | date("d/m/Y") }}<br>
+    <img src="{{ job.logo }}" align="top" width="200" height="100"/><br>
+    <b>Company: </b>{{ job.company }}<br>
+    <b>Site: </b>{{ job.url }}<br>
+    <b>Location: </b>{{ job.location }}<br>
+    <b>Position: </b>{{ job.position }}<br>
+    <b>Type: </b>{{ job.type }}<br>
+    <b>Description: </b>{{ job.description }}<br>
+    <b>How to apply: </b>{{ job.howToApply }}<br>
+    <b>Email: </b>{{ job.email }}<br>
+{% endblock %}

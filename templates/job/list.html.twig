@@ -13,7 +13,7 @@
             <tr>
                 <td>{{ job.location }}</td>
                 <td>
-                    {{ job.position }}
+                    <a href="{{ url('job.show', {id: job.id}) }}">{{ job.position }}</a>
                 </td>
                 <td>{{ job.company }}</td>
                 <td>{{ job.createdat|date("d/m/Y") }}</td>

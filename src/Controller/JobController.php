@@ -34,10 +34,26 @@ class JobController extends AbstractController
             $order = $request->query->get('direction');
         }
         $jobs = $this->getDoctrine()->getRepository(Job::class)
-                     ->findAllOrderBy($sort_by, $order);
+                     ->findAllOrderByNotExpired($sort_by, $order);
 
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,
+        ]);
+    }
+
+    /**
+     * Shows a job entity
+     *
+     * @Route("/show/{id}", name="job.show", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @param Job $job
+     *
+     * @return Response
+     */
+    public function showAction(Job $job): Response
+    {
+        return $this->render('job/show.html.twig', [
+            'job' => $job,
         ]);
     }
 }
