@@ -13,7 +13,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="=navbar-header">
-            <form class="form-inline" method="get" action="job">
+            <form class="form-inline" method="get" action="">
                 <a class="navbar-brand" href="{{ url('job.list') }}">Jobeet</a>
                 <div class="form-group navbar-right">
                     <input class="form-control" type="text" name="searchRequest" placeholder="Search job">
@@ -27,16 +27,16 @@
 
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
-
-<div class="footer navbar-fixed-bottom container">
-    <h4>
-        <a href="#">AboutJobeet | </a>
-        <a href="#">Full RSS Feed | </a>
-        <a href="#">Jobeet API | </a>
-        <a href="#">Affiliates</a>
-    </h4>
-</div>
-
+<footer class="page-footer">
+    <div class="footer navbar-fixed-bottom container">
+        <h4>
+            <a href="#">AboutJobeet | </a>
+            <a href="#">Full RSS Feed | </a>
+            <a href="#">Jobeet API | </a>
+            <a href="#">Affiliates</a>
+        </h4>
+    </div>
+</footer>
 </body>
 
 </html>

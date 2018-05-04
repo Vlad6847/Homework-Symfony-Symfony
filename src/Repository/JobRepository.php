@@ -62,11 +62,7 @@ class JobRepository extends ServiceEntityRepository
                         ->where('j.activated = true')
                         ->andWhere('j.expiresAt > :nowDate')
                         ->orderBy('j.'.$field, $order)
-                        ->setParameters([
-                          //  'field' => $field,
-                           // 'order' => $order,
-                            'nowDate' => new \DateTime(),
-                        ])
+                        ->setParameter('nowDate', new \DateTime())
                         ->getQuery()
                         ->getResult();
         }
@@ -78,14 +74,15 @@ class JobRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('j')
                     ->andWhere('j.activated = true')
-                    ->andWhere('j.position like %:position%')
-                    ->orderBy('j.'.$position, $order)
+                    ->andWhere('j.position like %:position % ')
+                    ->orderBy('j.'.$position. ', :order')
                     ->setParameters([
-                        ':position' => $position,
-                        //':order' => $order,
+                        'position' => $position,
+                        'order' => $order,
                     ])
                     ->getQuery()
                     ->getResult();
 
     }
+
 }

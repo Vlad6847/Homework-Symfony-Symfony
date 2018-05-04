@@ -36,7 +36,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setPublic($faker->boolean);
             $job->setActivated($faker->boolean);
             $job->setEmail($faker->email);
-            //$job->setExpiresAt($faker->dateTimeBetween('now', '+2 years'));
             $job->setCategory($faker->randomElement($categories));
             $manager->persist($job);
         }
