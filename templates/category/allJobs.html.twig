@@ -9,7 +9,7 @@
             <th class="text-center">Created at</th>
         </tr>
 
-        {% for job in jobs %}
+        {% for job in category.getJobs %}
             <tr>
                 <td>{{ job.location }}</td>
                 <td>

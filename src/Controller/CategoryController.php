@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,22 +20,19 @@ class CategoryController extends AbstractController
 {
     /**
      * Shows all jobs by specific category
-     * @Route("category/{slug}", name="allJobs")
      *
-     * @param $slug
+     * @Entity("category", expr="repository.findBySlugWithActiveJobsNotExpired(slug)")
+     * @Route("category/{slug}", name="allJobs")
+     * @Method("GET")
+     * @param Category $category
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \LogicException
+     * @internal param $slug
+     *
      */
-        public function allJobsByCategory($slug): Response
-        {
-            $category = $this->getDoctrine()
-                         ->getRepository(Category::class)
-                         ->findBySlugWithActiveJobsNotExpired($slug);
-
-            $jobs = $category->getJobs();
-            return $this->render('category/allJobs.html.twig', compact('jobs'));
-        }
+    public function allJobsByCategory(Category $category): Response
+    {
+        return $this->render('category/allJobs.html.twig',
+            ['category' => $category]);
+    }
 }

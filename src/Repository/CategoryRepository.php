@@ -62,7 +62,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @param $slug
      *
-     * @return array
+     * @return Category|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
@@ -79,16 +79,4 @@ class CategoryRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getSingleResult();
     }
-
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

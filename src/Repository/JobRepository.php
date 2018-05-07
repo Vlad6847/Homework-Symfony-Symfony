@@ -76,7 +76,7 @@ class JobRepository extends ServiceEntityRepository
      * @return Job|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findActiveJob($id): ?Job
+    public function findActiveJob(int $id): ?Job
     {
         return $this->createQueryBuilder('j')
                     ->where('j.activated = true')
@@ -86,24 +86,4 @@ class JobRepository extends ServiceEntityRepository
                     ->getOneOrNullResult();
     }
 
-    /**
-     * @param $position
-     * @param $order
-     *
-     * @return array
-     */
-    public function findAllByPositionOrderBy($position, $order): array
-    {
-        return $this->createQueryBuilder('j')
-                    ->andWhere('j.activated = true')
-                    ->andWhere('j.position like %:position%')
-                    ->orderBy('j.' . $position, ', :order')
-                    ->setParameters([
-                        'position' => $position,
-                        'order' => $order,
-                    ])
-                    ->getQuery()
-                    ->getResult();
-
-    }
 }
