@@ -33,13 +33,13 @@ class JobController extends AbstractController
     public function list(Request $request): Response
     {
         $sortBy = 'createdAt';
-        $order  = 'ASC';
+        $order = 'ASC';
 
         if (null !== $request->query->get('field')
             && null !== $request->query->get('direction')
         ) {
             $sortBy = $request->query->get('field');
-            $order  = $request->query->get('direction');
+            $order = $request->query->get('direction');
         }
 
         $categoriesAndActiveNotExpiredJobs = $this->getDoctrine()
