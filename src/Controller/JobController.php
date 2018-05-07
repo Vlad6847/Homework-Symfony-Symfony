@@ -2,19 +2,27 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Job;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class JobController
+ *
+ * @Route(name="job.")
+ * @package App\Controller
+ */
 class JobController extends AbstractController
 {
     /**
      * List of all jobs
      *
-     * @Route("/", name="job.list")
+     * @Route("/", name="list")
      * @Method("GET")
      *
      * @param Request $request
@@ -22,38 +30,39 @@ class JobController extends AbstractController
      * @return Response
      * @throws \LogicException
      */
-    public function listAction(Request $request): Response
+    public function list(Request $request): Response
     {
         $sortBy = 'createdAt';
-        $order = 'ASC';
+        $order  = 'ASC';
 
         if (null !== $request->query->get('field')
             && null !== $request->query->get('direction')
         ) {
             $sortBy = $request->query->get('field');
-            $order = $request->query->get('direction');
+            $order  = $request->query->get('direction');
         }
-        $jobs = $this->getDoctrine()->getRepository(Job::class)
-                     ->findAllOrderByNotExpired($sortBy, $order);
 
-        return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
-        ]);
+        $categoriesAndActiveNotExpiredJobs = $this->getDoctrine()
+                                                  ->getRepository(Category::class)
+                                                  ->findAllWithJobsActiveNotExpiredWithOrderByField($sortBy,
+                                                      $order);
+
+        return $this->render('job/list.html.twig',
+            compact('categoriesAndActiveNotExpiredJobs'));
     }
 
     /**
      * Shows a job entity
      *
-     * @Route("/show/{id}", name="job.show", requirements={"id": "\d+"})
+     * @Entity("job", expr="repository.findActiveJob(id)")
+     * @Route("/show/{id}", name="show", requirements={"id": "\d+"})
      * @Method("GET")
      * @param Job $job
      *
      * @return Response
      */
-    public function showAction(Job $job): Response
+    public function show(Job $job): Response
     {
-        return $this->render('job/show.html.twig', [
-            'job' => $job,
-        ]);
+        return $this->render('job/show.html.twig', compact('job'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="categories")
@@ -35,6 +36,30 @@ class Category
      * @ORM\OneToMany(targetEntity="Job", mappedBy="category")
      */
     private $jobs;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param $slug
+     *
+     * @return void
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
 
     public function __construct()
     {

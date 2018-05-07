@@ -11,17 +11,19 @@ class CategoryFixtures extends Fixture
 {
     /**
      * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create();
+        $category1 = new Category();
+        $category2 = new Category();
 
-        for ($i = 0; $i < 20; $i++) {
-            $category = new Category();
-            $category->setName($faker->word);
-            $manager->persist($category);
-        }
+        $category1->setName('Programming');
+        $manager->persist($category1);
+
+        $category2->setName('Design');
+        $manager->persist($category2);
 
         $manager->flush();
     }
