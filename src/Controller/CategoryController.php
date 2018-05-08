@@ -11,10 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * Class CategoryController
- *
  * @Route(name="category.")
- * @package App\Controller
  */
 class CategoryController extends AbstractController
 {
@@ -27,12 +24,11 @@ class CategoryController extends AbstractController
      * @param Category $category
      *
      * @return Response
-     * @internal param $slug
-     *
      */
     public function allJobsByCategory(Category $category): Response
     {
-        return $this->render('category/allJobs.html.twig',
-            ['category' => $category]);
+        return $this->render('category/allJobs.html.twig', [
+            'category' => $category,
+        ]);
     }
 }
