@@ -87,7 +87,8 @@ class JobRepository extends ServiceEntityRepository
                     ->getOneOrNullResult();
     }
 
-    public function getPaginatedActiveJobsByCategoryQuery(Category $category
+    public function getPaginatedActiveJobsByCategoryQuery(
+        Category $category
     ): AbstractQuery {
         return $this->createQueryBuilder('j')
                     ->where('j.category = :category')
