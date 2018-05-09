@@ -69,7 +69,7 @@ class JobController extends AbstractController
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
-     * @param Request                $request
+     * @param Request $request
      *
      * @param EntityManagerInterface $em
      *
