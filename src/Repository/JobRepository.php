@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -84,6 +85,17 @@ class JobRepository extends ServiceEntityRepository
                     ->setParameter('id', $id)
                     ->getQuery()
                     ->getOneOrNullResult();
+    }
+
+    public function getPaginatedActiveJobsByCategoryQuery(Category $category
+    ): AbstractQuery {
+        return $this->createQueryBuilder('j')
+                    ->where('j.category = :category')
+                    ->andWhere('j.expiresAt > :date')
+                    ->andWhere('j.activated = true')
+                    ->setParameter('category', $category)
+                    ->setParameter('date', new \DateTime())
+                    ->getQuery();
     }
 
 }
