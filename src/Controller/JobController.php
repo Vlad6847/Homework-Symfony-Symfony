@@ -67,7 +67,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="new")
+     * @Route("/job/new", name="new")
      * @Method({"GET", "POST"})
      * @param Request $request
      *

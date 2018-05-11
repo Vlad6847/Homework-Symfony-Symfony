@@ -21,11 +21,11 @@ class CategoryController extends Controller
      * Shows all jobs by specific category
      *
      * @Entity("category", expr="repository.findBySlugWithActiveJobsNotExpired(slug)")
-     * @Route("category/{slug}/{page}", name="allJobs", defaults={"page": 1})
+     * @Route("category/{slug}/{page}", name="allJobs", defaults={"page": 1}, requirements={"page": "\d+"})
      * @Method("GET")
      *
-     * @param Category           $category
-     * @param int                $page
+     * @param Category $category
+     * @param int $page
      *
      * @param PaginatorInterface $paginator
      *
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     ): Response {
         $activeJobs = $paginator->paginate(
             $this->getDoctrine()->getRepository(Job::class)
-            ->getPaginatedActiveJobsByCategoryQuery($category),
+                                ->getPaginatedActiveJobsByCategoryQuery($category),
             $page,
             $this->getParameter('max_jobs_on_category')
         );

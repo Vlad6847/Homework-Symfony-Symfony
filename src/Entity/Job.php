@@ -29,7 +29,7 @@ class Job
     private $company;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(nullable=true)
      */
     private $logo;
 

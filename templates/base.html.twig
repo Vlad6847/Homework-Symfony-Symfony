@@ -18,26 +18,28 @@
                 <div class="form-group navbar-right">
                     <input class="form-control" type="text" name="searchRequest" placeholder="Search job">
                     <a href="{{ url('job.list') }}" class="btn btn-default navbar-btn">Search</a>
-                    <a href="{{ url('job.list') }}" class="btn btn-primary navbar-btn">Post a job</a>
+                    <a href="{{ url('job.new') }}" class="btn btn-primary navbar-btn">Post a job</a>
                 </div>
             </form>
         </div>
     </div>
 </nav>
 
-{% block body %}{% endblock %}
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
 {% block javascripts %}{% endblock %}
 
 
 {#<footer class="page-footer">#}
-    {#<div class="footer navbar-fixed-bottom container">#}
-        {#<h4>#}
-            {#<a href="#">AboutJobeet | </a>#}
-            {#<a href="#">Full RSS Feed | </a>#}
-            {#<a href="#">Jobeet API | </a>#}
-            {#<a href="#">Affiliates</a>#}
-        {#</h4>#}
-    {#</div>#}
+{#<div class="footer navbar-fixed-bottom container">#}
+{#<h4>#}
+{#<a href="#">AboutJobeet | </a>#}
+{#<a href="#">Full RSS Feed | </a>#}
+{#<a href="#">Jobeet API | </a>#}
+{#<a href="#">Affiliates</a>#}
+{#</h4>#}
+{#</div>#}
 {#</footer>#}
 </body>
 
