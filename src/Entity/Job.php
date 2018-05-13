@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\HasLifecycleCallbacks()
@@ -11,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Job
 {
+    public const TYPES
+        = [
+            'full-time',
+            'part-time',
+            'freelance',
+        ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -29,7 +37,7 @@ class Job
     private $company;
 
     /**
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
 
@@ -166,20 +174,17 @@ class Job
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getLogo(): ?string
+    public function getLogo()
     {
         return $this->logo;
     }
 
     /**
-     * @param string $logo
+     * @param $logo
      *
      * @return Job
      */
-    public function setLogo(string $logo): self
+    public function setLogo($logo): self
     {
         $this->logo = $logo;
 

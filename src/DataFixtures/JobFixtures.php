@@ -26,7 +26,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job = new Job();
             $job->setType($faker->jobTitle);
             $job->setCompany($faker->company);
-            $job->setLogo($faker->imageUrl());
+            $job->setLogo('default.png');
             $job->setUrl($faker->url);
             $job->setPosition($faker->randomElement($positions));
             $job->setLocation($faker->city);

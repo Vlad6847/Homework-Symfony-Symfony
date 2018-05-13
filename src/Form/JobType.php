@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -32,60 +33,67 @@ class JobType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'full-time' => 'full-time',
-                    'part-time' => 'part-time',
-                    'freelance' => 'freelance',
-                ],
+                'choices' => array_combine(Job::TYPES, Job::TYPES),
                 'expanded' => true,
-            ])
-            ->add('company', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['max' => 255]),
                 ],
             ])
+            ->add('company', TextType::class)
             ->add('logo', FileType::class, [
-                'required' => false,
                 'constraints' => [
                     new Image(),
                 ],
             ])
             ->add('url', UrlType::class, [
-                'required' => false,
                 'constraints' => [
+                    new NotBlank(),
                     new Length(['max' => 255]),
                 ],
             ])
             ->add('position', TextType::class, [
                 'constraints' => [
+                    new NotBlank(),
                     new Length(['max' => 255]),
                 ],
             ])
             ->add('location', TextType::class, [
                 'constraints' => [
+                    new NotBlank(),
                     new Length(['max' => 255]),
                 ],
             ])
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
             ->add('howToApply', TextType::class, [
                 'constraints' => [
+                    new NotBlank(),
                     new Length(['max' => 255]),
                 ],
             ])
             ->add('public', ChoiceType::class, [
+                'label' => 'Public?',
                 'choices' => [
                     'Yes' => true,
                     'No' => false,
                 ],
             ])
             ->add('activated', ChoiceType::class, [
+                'label' => 'Activated?',
                 'choices' => [
                     'Yes' => true,
                     'No' => false,
                 ],
             ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new Email(),
+                    new NotBlank(),
+                ],
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
@@ -97,7 +105,7 @@ class JobType extends AbstractType
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Job::class,
