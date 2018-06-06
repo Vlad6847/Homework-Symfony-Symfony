@@ -1,6 +1,6 @@
 # Jobeet
 ## Installing
-1. git clone
+1. git clone (and enter to clonned rep)
 2. make start
 3. make php
 4. composer install
