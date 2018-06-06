@@ -5,14 +5,10 @@
         <table class="table table-hover text-center">
         <thead><h4><a href="{{ url('category.allJobs', {slug: category.slug}) }}">&nbsp;{{ category.name }}</a></h4></thead>
         <tr class="active">
-            <th class="text-center col-md-2"><a href="{{ url('job.list', {field: 'location', direction: 'ASC'}) }}">City</a></th>
-            <th class="text-center col-md-3"><a href="{{ url('job.list', {field: 'position', direction: 'ASC'}) }}">Position</a>
-            </th>
-            <th class="text-center col-md-3"><a href="{{ url('job.list', {field: 'company', direction: 'ASC'}) }}">Company</a>
-            </th>
-            <th class="text-center col-md-2"><a href="{{ url('job.list', {field: 'createdAt', direction: 'ASC'}) }}">Created
-                    at</a>
-            </th>
+            <th class="text-center col-md-2">City</th>
+            <th class="text-center col-md-3">Position</th>
+            <th class="text-center col-md-3">Company</th>
+            <th class="text-center col-md-2">Created at</th>
         </tr>
 
         {% for job in category.jobs | slice(0, max_jobs_on_homepage) %}

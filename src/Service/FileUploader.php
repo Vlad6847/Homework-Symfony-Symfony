@@ -26,7 +26,7 @@ class FileUploader
      * @param UploadedFile $file
      *
      * @return string
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
+     * @throws \Exception
      */
     public function upload(UploadedFile $file): string
     {

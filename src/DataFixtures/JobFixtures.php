@@ -9,6 +9,7 @@ use Faker;
 use App\Entity\Job;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\File\File;
 
 class JobFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -26,15 +27,15 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job = new Job();
             $job->setType($faker->jobTitle);
             $job->setCompany($faker->company);
-            $job->setLogo('default.png');
+            $job->setLogo('default.jpg');
             $job->setUrl($faker->url);
             $job->setPosition($faker->randomElement($positions));
             $job->setLocation($faker->city);
             $job->setDescription($faker->paragraph(1));
             $job->setHowToApply($faker->paragraph(1));
             $job->setToken($faker->md5);
-            $job->setPublic($faker->boolean);
-            $job->setActivated($faker->boolean);
+            $job->setPublic(true);
+            $job->setActivated(true);
             $job->setEmail($faker->email);
             $job->setCategory($faker->randomElement($categories));
             $manager->persist($job);

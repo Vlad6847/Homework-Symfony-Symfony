@@ -25,38 +25,19 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $field
-     * @param $order
-     *
      * @return array
      */
-    public function findAllWithJobsActiveNotExpiredWithOrderByField(
-        $field,
-        $order
-    ): array {
-        if (\in_array($field, [
-                'location',
-                'company',
-                'position',
-                'createdAt',
-            ])
-            && \in_array($order, [
-                'ASC',
-                'DESC',
-            ])
-        ) {
-            return $this->createQueryBuilder('c')
-                        ->select('c, j')
-                        ->innerJoin('c.jobs', 'j')
-                        ->where('j.activated = true')
-                        ->andWhere('j.expiresAt > :nowDate')
-                        ->orderBy('j.' . $field, $order)
-                        ->setParameter('nowDate', new \DateTime())
-                        ->getQuery()
-                        ->getResult();
-        }
-
-        return [];
+    public function findAllWithJobsActiveNotExpiredWithOrderByField(): array
+    {
+        return $this->createQueryBuilder('c')
+                    ->select('c, j')
+                    ->innerJoin('c.jobs', 'j')
+                    ->where('j.activated = true')
+                    ->andWhere('j.expiresAt > :nowDate')
+                    ->orderBy('j.createdAt', 'ASC')
+                    ->setParameter('nowDate', new \DateTime())
+                    ->getQuery()
+                    ->getResult();
     }
 
     /**

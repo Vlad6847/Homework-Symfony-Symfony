@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Edit Job
+{% endblock %}
+
+{% block body %}
+    <h2>Job edit</h2>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" class="btn btn-default" title="Edit"/>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

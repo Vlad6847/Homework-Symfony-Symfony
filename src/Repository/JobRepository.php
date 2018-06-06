@@ -39,36 +39,18 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $field
-     *
-     * @param string $order
-     *
      * @return array
      */
-    public function findAllOrderByNotExpired($field, $order): array
+    public function findAllOrderByNotExpired(): array
     {
 
-        if (\in_array($field, [
-                'location',
-                'company',
-                'position',
-                'createdAt',
-            ])
-            && \in_array($order, [
-                'ASC',
-                'DESC',
-            ])
-        ) {
-            return $this->createQueryBuilder('j')
-                        ->where('j.activated = true')
-                        ->andWhere('j.expiresAt > :nowDate')
-                        ->orderBy('j.' . $field, $order)
-                        ->setParameter('nowDate', new \DateTime())
-                        ->getQuery()
-                        ->getResult();
-        }
-
-        return [];
+        return $this->createQueryBuilder('j')
+                    ->where('j.activated = true')
+                    ->andWhere('j.expiresAt > :nowDate')
+                    ->orderBy('j.createdAt', 'ASC')
+                    ->setParameter('nowDate', new \DateTime())
+                    ->getQuery()
+                    ->getResult();
     }
 
     /**

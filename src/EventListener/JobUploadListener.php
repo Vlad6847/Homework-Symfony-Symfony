@@ -2,17 +2,16 @@
 
 namespace App\EventListener;
 
-use App\Service\FileUploader;
 use App\Entity\Job;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class JobUploadListener
 {
-    /**
-     * @var FileUploader
-     */
+    /** @var FileUploader */
     private $uploader;
 
     /**
@@ -26,59 +25,39 @@ class JobUploadListener
     /**
      * @param LifecycleEventArgs $args
      *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
+     * @throws \Exception
+     */
+    public function prePersist(LifecycleEventArgs $args): void
+    {
+        $entity = $args->getEntity();
+        $this->uploadFile($entity);
+    }
+
+    /**
+     * @param PreUpdateEventArgs $args
+     *
+     * @throws \Exception
+     */
+    public function preUpdate(PreUpdateEventArgs $args): void
+    {
+        $entity = $args->getEntity();
+        $this->uploadFile($entity);
+        $this->fileToString($entity);
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
      */
     public function postLoad(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
-
         $this->stringToFile($entity);
     }
 
     /**
      * @param $entity
      *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
-     */
-    private function stringToFile($entity): void
-    {
-        if (!$entity instanceof Job){
-            return;
-        }
-
-        if ($fileName = $entity->getLogo()) {
-            $entity->setLogo(new File($this->uploader->getTargetDirectory() . '/' . $fileName));
-        }
-    }
-
-    /**
-     * @param LifecycleEventArgs $args
-     *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
-     */
-    public function prePersist(LifecycleEventArgs $args): void
-    {
-        $entity = $args->getEntity();
-
-        $this->uploadFile($entity);
-    }
-
-    /**
-     * @param LifecycleEventArgs $args
-     *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
-     */
-    public function preUpdate(LifecycleEventArgs $args):void
-    {
-        $entity = $args->getEntity();
-
-        $this->uploadFile($entity);
-    }
-
-    /**
-     * @param $entity
-     *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
+     * @throws \Exception
      */
     private function uploadFile($entity): void
     {
@@ -86,11 +65,38 @@ class JobUploadListener
             return;
         }
         $logoFile = $entity->getLogo();
-
         if ($logoFile instanceof UploadedFile) {
             $fileName = $this->uploader->upload($logoFile);
-
             $entity->setLogo($fileName);
+        }
+    }
+
+    /**
+     * @param $entity
+     */
+    private function stringToFile($entity): void
+    {
+        if (!$entity instanceof Job) {
+            return;
+        }
+        if ($fileName = $entity->getLogo()) {
+            $entity->setLogo(
+                new File($this->uploader->getTargetDirectory().'/'.$fileName)
+            );
+        }
+    }
+
+    /**
+     * @param $entity
+     */
+    private function fileToString($entity): void
+    {
+        if (!$entity instanceof Job) {
+            return;
+        }
+        $logoFile = $entity->getLogo();
+        if ($logoFile instanceof File) {
+            $entity->setLogo($logoFile->getFilename());
         }
     }
 }
