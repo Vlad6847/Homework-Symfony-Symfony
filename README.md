@@ -1,6 +1,7 @@
 # Jobeet
 ## Installing
-1. git clone (and enter to clonned rep)
+1. git clone git@github.com:Vlad6847/Homework-Symfony-Symfony.git && \
+  cd Homework-Symfony-Symfony
 2. make start
 3. make php
 4. composer install
