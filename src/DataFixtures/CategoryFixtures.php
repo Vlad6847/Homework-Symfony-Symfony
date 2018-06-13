@@ -19,10 +19,10 @@ class CategoryFixtures extends Fixture
         $category1 = new Category();
         $category2 = new Category();
 
-        $category1->setName('Category-1');
+        $category1->setName('Some category');
         $manager->persist($category1);
 
-        $category2->setName('Category-2');
+        $category2->setName('Category');
         $manager->persist($category2);
 
         $manager->flush();
