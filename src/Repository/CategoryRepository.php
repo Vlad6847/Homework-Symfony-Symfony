@@ -34,7 +34,7 @@ class CategoryRepository extends ServiceEntityRepository
                     ->innerJoin('c.jobs', 'j')
                     ->where('j.activated = true')
                     ->andWhere('j.expiresAt > :nowDate')
-                    ->orderBy('j.createdAt', 'ASC')
+                    ->orderBy('c.name', 'ASC')
                     ->setParameter('nowDate', new \DateTime())
                     ->getQuery()
                     ->getResult();
@@ -57,6 +57,7 @@ class CategoryRepository extends ServiceEntityRepository
                     ->andWhere('c.slug = :slug')
                     ->setParameter('nowDate', new \DateTime())
                     ->setParameter('slug', $slug)
+                    ->orderBy('j.createdAt', 'DESC')
                     ->getQuery()
                     ->getSingleResult();
     }

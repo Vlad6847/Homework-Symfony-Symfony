@@ -16,14 +16,11 @@ class CategoryFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $category1 = new Category();
-        $category2 = new Category();
-
-        $category1->setName('Some category');
-        $manager->persist($category1);
-
-        $category2->setName('Category');
-        $manager->persist($category2);
+        for($i = 1; $i < 6; $i++) {
+            $category = new Category();
+            $category->setName('Category '.$i);
+            $manager->persist($category);
+        }
 
         $manager->flush();
     }

@@ -20,16 +20,18 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('us_US');
         $categories = $manager->getRepository(Category::class)->findAll();
         $positions = ['Web Developer', 'Web Designer', 'Scrum master', 'Project Manager', 'Team Lead'];
-        for ($i = 0; $i < 150; $i++) {
+
+        for ($i = 0; $i < 500; $i++) {
             $job = new Job();
-            $job->setType($faker->jobTitle);
+            $job->setType($faker->randomElement(Job::TYPES));
             $job->setCompany($faker->company);
             $job->setLogo('default.png');
             $job->setUrl($faker->url);
-            $job->setPosition($faker->randomElement($positions));
+//            $job->setPosition($faker->randomElement($positions));
+            $job->setPosition($faker->jobTitle);
             $job->setLocation($faker->city);
             $job->setDescription($faker->paragraph(1));
             $job->setHowToApply($faker->paragraph(1));

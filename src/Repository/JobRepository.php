@@ -33,7 +33,7 @@ class JobRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('j')
                     ->andWhere('j.activated = true')
-                    ->orderBy('j.createdAt', 'ASC')
+                    ->orderBy('j.createdAt', 'DESC')
                     ->getQuery()
                     ->getResult();
     }
@@ -47,7 +47,7 @@ class JobRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('j')
                     ->where('j.activated = true')
                     ->andWhere('j.expiresAt > :nowDate')
-                    ->orderBy('j.createdAt', 'ASC')
+                    ->orderBy('j.createdAt', 'DESC')
                     ->setParameter('nowDate', new \DateTime())
                     ->getQuery()
                     ->getResult();
@@ -84,19 +84,55 @@ class JobRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function getPaginatedActiveJobsBySearchQuery($query): AbstractQuery
+    public function getPaginatedActiveJobsBySearchQuery($rawQuery
+    ): AbstractQuery {
+        $query       = $this->sanitizeSearchQuery($rawQuery);
+        $searchTerms = $this->extractSearchTerms($query);
+
+        if (0 === \count($searchTerms)) {
+            return [];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                ->andWhere('j.activated = true
+                AND j.expiresAt > :nowDate
+                AND (j.description LIKE :t_'.$key.
+                ' OR j.location LIKE :t_'.$key.
+                ' OR j.position LIKE :t_'.$key.
+                ' OR j.company LIKE :t_'.$key.')')
+                ->setParameter('nowDate', new \DateTime())
+                ->setParameter('t_'.$key, '%'.$term.'%');
+        }
+
+        return $queryBuilder
+            ->orderBy('j.createdAt', 'DESC')
+            ->getQuery();
+    }
+
+    /**
+     * Removes all non-alphanumeric characters except whitespaces.
+     */
+    private function sanitizeSearchQuery(string $query): string
     {
-        return $this->createQueryBuilder('j')
-                    ->where('j.activated = true')
-                    ->andWhere('j.expiresAt > :nowDate')
-                    ->andWhere('j.description like :query')
-                    ->orWhere('j.location LIKE :query')
-                    ->orWhere('j.position LIKE :query')
-                    ->orWhere('j.company LIKE :query')
-                    ->orderBy('j.createdAt', 'DESC')
-                    ->setParameter('nowDate', new \DateTime())
-                    ->setParameter('query', '%'.$query.'%')
-                    ->getQuery();
+        return trim(preg_replace('/[[:space:]]+/', ' ', $query));
+    }
+
+    /**
+     * Splits the search query into terms and removes the ones which are irrelevant.
+     */
+    private function extractSearchTerms(string $searchQuery): array
+    {
+        $terms = array_unique(explode(' ', $searchQuery));
+
+        return array_filter(
+            $terms,
+            function ($term) {
+                return 2 <= mb_strlen($term);
+            }
+        );
     }
 
 }
