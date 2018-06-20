@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+    {% if queryFlag %}
+        <div class="count">
+            <h4>Results found: {{ foundJobs.getTotalItemCount }} </h4><br>
+        </div>
+        {% include 'table.html.twig' with {'jobs': foundJobs} only %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(foundJobs) }}
+        </div>
+    {% else %}
+        <div class="count">
+            <h4>Please enter the search query </h4><br>
+        </div>
+    {% endif %}
+{% endblock %}

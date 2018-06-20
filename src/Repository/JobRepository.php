@@ -81,4 +81,22 @@ class JobRepository extends ServiceEntityRepository
                     ->getQuery();
     }
 
+    /**
+     * @return array
+     */
+    public function getPaginatedActiveJobsBySearchQuery($query): AbstractQuery
+    {
+        return $this->createQueryBuilder('j')
+                    ->where('j.activated = true')
+                    ->andWhere('j.expiresAt > :nowDate')
+                    ->andWhere('j.description like :query')
+                    ->orWhere('j.location LIKE :query')
+                    ->orWhere('j.position LIKE :query')
+                    ->orWhere('j.company LIKE :query')
+                    ->orderBy('j.createdAt', 'DESC')
+                    ->setParameter('nowDate', new \DateTime())
+                    ->setParameter('query', '%'.$query.'%')
+                    ->getQuery();
+    }
+
 }

@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Job;
 use App\Form\JobType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,8 @@ class JobController extends AbstractController
                                                   ->getRepository(
                                                       Category::class
                                                   )
-                                                  ->findAllWithJobsActiveNotExpiredWithOrderByField();
+                                                  ->findAllWithJobsActiveNotExpiredWithOrderByField(
+                                                  );
 
         return $this->render(
             'job/list.html.twig',
@@ -252,5 +254,41 @@ class JobController extends AbstractController
                     )
                     ->setMethod('POST')
                     ->getForm();
+    }
+
+    /**
+     * @Route("/search/{page}", methods={"GET"}, name="search", defaults={"page": 1}, requirements={"page": "\d+"})
+     * @param Request            $request
+     * @param PaginatorInterface $paginator
+     *
+     * @param int                $page
+     *
+     * @return Response
+     */
+    public function search(
+        Request $request,
+        PaginatorInterface $paginator,
+        int $page
+    ): Response {
+        $query     = $request->query->get('q', '');
+        $queryFlag = true;
+
+        if ($query === '') {
+            $queryFlag = false;
+        }
+        $foundJobs = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Job::class)
+                 ->getPaginatedActiveJobsBySearchQuery($query),
+            $page,
+            30
+        );
+        return $this->render(
+            'job/search.html.twig',
+            [
+                'lastQuery' => $query,
+                'queryFlag' => $queryFlag,
+                'foundJobs' => $foundJobs,
+            ]
+        );
     }
 }
