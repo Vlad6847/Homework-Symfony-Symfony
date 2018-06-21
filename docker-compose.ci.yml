@@ -26,4 +26,5 @@ services:
         container_name: jobeet-php-fpm
         environment:
             - APP_ENV=prod
-            - APP_SECRET=0727f68770f1cb399e816a33d5269884
+            - APP_SECRET=143d58a6cfca1f3d63812b40d7576382
+
