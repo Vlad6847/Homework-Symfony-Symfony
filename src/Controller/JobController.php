@@ -270,23 +270,19 @@ class JobController extends AbstractController
         PaginatorInterface $paginator,
         int $page
     ): Response {
-        $query     = $request->query->get('q', '');
-        $queryFlag = true;
+        $query = $request->query->get('q', '');
 
-        if ($query === '') {
-            $queryFlag = false;
-        }
         $foundJobs = $paginator->paginate(
             $this->getDoctrine()->getRepository(Job::class)
                  ->getPaginatedActiveJobsBySearchQuery($query),
             $page,
             30
         );
+
         return $this->render(
             'job/search.html.twig',
             [
                 'lastQuery' => $query,
-                'queryFlag' => $queryFlag,
                 'foundJobs' => $foundJobs,
             ]
         );
