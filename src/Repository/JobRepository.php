@@ -82,7 +82,9 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * @param $rawQuery
+     *
+     * @return AbstractQuery
      */
     public function getPaginatedActiveJobsBySearchQuery($rawQuery
     ): AbstractQuery {
@@ -90,7 +92,9 @@ class JobRepository extends ServiceEntityRepository
         $searchTerms = $this->extractSearchTerms($query);
 
         if (0 === \count($searchTerms)) {
-            return [];
+            return $this->createQueryBuilder('j')
+                        ->andWhere('1 != 1')
+                        ->getQuery();
         }
 
         $queryBuilder = $this->createQueryBuilder('j');
