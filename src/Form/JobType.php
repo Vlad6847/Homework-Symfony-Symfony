@@ -47,7 +47,7 @@ class JobType extends AbstractType
             ])
             ->add('url', UrlType::class, [
                 'constraints' => [
-                    new NotBlank(),
+               //     new NotBlank(),
                     new Length(['max' => 255]),
                 ],
             ])
