@@ -23,7 +23,6 @@ services:
         image: fletcher6847/jobeet:latest
         container_name: jobeet-php-fpm
         environment:
-            - APP_ENV=dev
             - APP_SECRET=143d58a6cfca1f3d63812b40d7576382
             - MAILER_URL=null://localhost
             - DATABASE_URL=mysql://user:password@mysql:3306/jobeet
