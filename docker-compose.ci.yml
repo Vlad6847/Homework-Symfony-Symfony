@@ -25,6 +25,6 @@ services:
             dockerfile: docker/ci/php-fpm/Dockerfile
         container_name: jobeet-php-fpm
         environment:
-            - APP_ENV=prod
+            - APP_ENV=dev
             - APP_SECRET=143d58a6cfca1f3d63812b40d7576382
 
