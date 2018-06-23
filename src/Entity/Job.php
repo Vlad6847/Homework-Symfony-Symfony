@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\File\File;
 class Job
 {
     public const TYPES = [
-            'full-time',
-            'part-time',
-            'freelance',
+            'Full-time',
+            'Part-time',
+            'Freelance',
         ];
 
     /**
